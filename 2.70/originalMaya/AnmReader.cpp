@@ -191,10 +191,10 @@ MStatus AnmReader::read(istream& file)
             {
                 int name_hash;
                 file.read(reinterpret_cast<char*>(&name_hash), 4);
-                WORD pos_id;
+                uint16_t pos_id;
                 file.read(reinterpret_cast<char*>(&pos_id), 2);
                 file.seekg(2, ios::cur); // pos id from unit pos, useless for us
-                WORD quat_id;
+                uint16_t quat_id;
                 file.read(reinterpret_cast<char*>(&quat_id), 2);
                 file.seekg(2, ios::cur); // 0
 

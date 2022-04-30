@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectGuid>{681412B0-F197-4A2F-9263-DEA2E8690146}</ProjectGuid>
+    <RootNamespace>RiotFileTranslator</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>17.0.32203.90</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(MAYA_LOCATION)\include;.;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>X64</TargetEnvironment>
+      <TypeLibraryName>.\Release/RiotFileTranslator.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/GR /GS /EHsc %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <PreprocessorDefinitions>NDEBUG;WIN64;_WINDOWS;NT_PLUGIN;REQUIRE_IOSTREAM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <AssemblerListingLocation>gen\$(Configuration)\$(Platform)\</AssemblerListingLocation>
+      <ObjectFileName>gen\$(Configuration)\$(Platform)\</ObjectFileName>
+      <ProgramDataBaseFileName>gen\$(Configuration)\$(Platform)\RiotFileTranslator.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/export:initializePlugin /export:uninitializePlugin  %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>$(MAYA_LOCATION)\lib\OpenMaya.lib;$(MAYA_LOCATION)\lib\OpenMayaAnim.lib;$(MAYA_LOCATION)\lib\Foundation.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>bin\RiotFileTranslator.mll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <ProgramDatabaseFile>gen\$(Configuration)\$(Platform)\RiotFileTranslator.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <ImportLibrary>gen\$(Configuration)\$(Platform)\RiotFileTranslator.lib</ImportLibrary>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AnmExporter.cpp" />
+    <ClCompile Include="AnmImporter.cpp" />
+    <ClCompile Include="AnmReader.cpp" />
+    <ClCompile Include="AnmWriter.cpp" />
+    <ClCompile Include="FixAnim.cpp" />
+    <ClCompile Include="FreezeRot.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="maya_misc.cpp" />
+    <ClCompile Include="ResetBindPose.cpp" />
+    <ClCompile Include="ScbExporter.cpp" />
+    <ClCompile Include="ScbImporter.cpp" />
+    <ClCompile Include="ScbReader.cpp" />
+    <ClCompile Include="ScbWriter.cpp" />
+    <ClCompile Include="ScoExporter.cpp" />
+    <ClCompile Include="ScoImporter.cpp" />
+    <ClCompile Include="ScoReader.cpp" />
+    <ClCompile Include="ScoWriter.cpp" />
+    <ClCompile Include="SkExporter.cpp" />
+    <ClCompile Include="SklImporter.cpp" />
+    <ClCompile Include="SklReader.cpp" />
+    <ClCompile Include="SklWriter.cpp" />
+    <ClCompile Include="SknImporter.cpp" />
+    <ClCompile Include="SknReader.cpp" />
+    <ClCompile Include="SknWriter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AnmData.hpp" />
+    <ClInclude Include="AnmExporter.h" />
+    <ClInclude Include="AnmImporter.h" />
+    <ClInclude Include="AnmReader.h" />
+    <ClInclude Include="AnmWriter.h" />
+    <ClInclude Include="FixAnim.h" />
+    <ClInclude Include="FreezeRot.h" />
+    <ClInclude Include="maya_misc.h" />
+    <ClInclude Include="ResetBindPose.h" />
+    <ClInclude Include="ScbData.hpp" />
+    <ClInclude Include="ScbExporter.h" />
+    <ClInclude Include="ScbImporter.h" />
+    <ClInclude Include="ScbReader.h" />
+    <ClInclude Include="ScbWriter.h" />
+    <ClInclude Include="ScoData.hpp" />
+    <ClInclude Include="ScoExporter.h" />
+    <ClInclude Include="ScoImporter.h" />
+    <ClInclude Include="ScoReader.h" />
+    <ClInclude Include="ScoWriter.h" />
+    <ClInclude Include="SkExporter.h" />
+    <ClInclude Include="SklData.hpp" />
+    <ClInclude Include="SklImporter.h" />
+    <ClInclude Include="SklReader.h" />
+    <ClInclude Include="SklWriter.h" />
+    <ClInclude Include="SknData.hpp" />
+    <ClInclude Include="SknImporter.h" />
+    <ClInclude Include="SknReader.h" />
+    <ClInclude Include="SknWriter.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

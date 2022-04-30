@@ -11,7 +11,7 @@
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful, 
+    This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
@@ -66,14 +66,14 @@ MStatus SknReader::read(istream& file)
         FAILURE("SknReader: magic is wrong!");
 
     // get version
-    USHORT version;
+    uint16_t version;
     file.read(reinterpret_cast<char*>(&version), 2);
     if (version > 2)
         FAILURE("SknReader: skn type not supported, \n please report that to ThiSpawn");
     data_.version = version;
 
     // get num obj
-    USHORT num_objects;
+    uint16_t num_objects;
     file.read(reinterpret_cast<char*>(&num_objects), 2);
     if (num_objects != 1)
         FAILURE("SknReader: more than 1 or no objects in the file.");
@@ -121,13 +121,13 @@ MStatus SknReader::read(istream& file)
     minlen += 2 * num_indices + SknVtx::kSizeInFile * num_vertices;
     if (length < minlen)
         FAILURE("SknReader: unexpected end of file");
-    
+
 
     // get indices
     int num_triangles = num_indices / 3;
     for (int i = 0; i < num_triangles; i++)
     {
-        USHORT indices[3];
+        uint16_t indices[3];
         file.read(reinterpret_cast<char*>(&indices), 6);
         // check if that can build a triangle
         if (indices[0] == indices[1] ||
@@ -141,7 +141,7 @@ MStatus SknReader::read(istream& file)
             indices[2] >= data_.num_vtxs)
         {
             MGlobal::displayWarning("SknReader: input mesh has a badly built triangle, removing it...");
-            data_.num_indices -= 3; 
+            data_.num_indices -= 3;
         }
         else
         {
@@ -215,14 +215,14 @@ MStatus SknReader::loadData(MString& name, bool use_normals, SklData* skl_data)
 
     //create mesh
     mesh.create(
-        data_.num_vtxs, 
-        num_triangles, 
-        vertex_array, 
-        poly_counts, 
-        poly_connects, 
-        u_array, 
-        v_array, 
-        MObject::kNullObj, 
+        data_.num_vtxs,
+        num_triangles,
+        vertex_array,
+        poly_counts,
+        poly_connects,
+        u_array,
+        v_array,
+        MObject::kNullObj,
         &status
     );
 
@@ -382,7 +382,7 @@ MStatus SknReader::loadData(MString& name, bool use_normals, SklData* skl_data)
                                 // to prevent vertex ids from changing.
         return MS::kSuccess;
     }
-    
+
     skl_data->joints;
 
     MSelectionList selectList;
@@ -427,13 +427,13 @@ MStatus SknReader::loadData(MString& name, bool use_normals, SklData* skl_data)
         if (j == static_cast<int>(influences_dag_path.length()))
             FAILURE("SknReader: unable to find a bound bone.\
                         this error should not happen!");
-        
+
         influenceIndicesBySknId[i] = j;
     }
 
     MFnSingleIndexedComponent fn_comp;
     MObject vtx_comp = fn_comp.create(MFn::kMeshVertComponent);
-    
+
     MIntArray group_vtx_indices(data_.num_vtxs);
     // create values per vertex (component)
     // and add the vertex to the components.
@@ -454,7 +454,7 @@ MStatus SknReader::loadData(MString& name, bool use_normals, SklData* skl_data)
         for (int j = 0; j < 4; j++)
         {
             double weight = vtx.weights[j];
-            
+
             int n = vtx.skn_indices[j];
             if (weight != 0)
                 values[i * num_influences + n] = weight;
@@ -465,7 +465,7 @@ MStatus SknReader::loadData(MString& name, bool use_normals, SklData* skl_data)
     }
 
 
-    status = fn_skin_cluster.setWeights(mesh_dag_path, vtx_comp, influenceIndicesBySknId, values, false); 
+    status = fn_skin_cluster.setWeights(mesh_dag_path, vtx_comp, influenceIndicesBySknId, values, false);
     if (status != MS::kSuccess)
         FAILURE(status.errorString());
 
@@ -477,4 +477,3 @@ MStatus SknReader::loadData(MString& name, bool use_normals, SklData* skl_data)
 }
 
 } // namespace riot
-

@@ -11,7 +11,7 @@
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful, 
+    This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
@@ -57,11 +57,11 @@ MStatus SknWriter::write(ostream& file)
     file.write(reinterpret_cast<char*>(&magic), 4);
 
     // set version
-    USHORT version = 1;
+    uint16_t version = 1;
     file.write(reinterpret_cast<char*>(&version), 2);
 
     // set num obj
-    USHORT num_objects = 1;
+    uint16_t num_objects = 1;
     file.write(reinterpret_cast<char*>(&num_objects), 2);
 
     // set materials
@@ -89,7 +89,7 @@ MStatus SknWriter::write(ostream& file)
     // set indices
     for (int i = 0; i < num_indices; i++)
     {
-        USHORT indice = data_.indices.at(i);
+        uint16_t indice = data_.indices.at(i);
         file.write(reinterpret_cast<char*>(&indice), 2);
     }
 
@@ -119,7 +119,7 @@ MStatus SknWriter::dumpData(SklData* skl_data)
     if (MStatus::kSuccess != MGlobal::getActiveSelectionList(selection_list))
         FAILURE("SknWriter: MGlobal::getActiveSelectionList()");
 
-    MItSelectionList it_selection_list(selection_list, MFn::kMesh, &status);    
+    MItSelectionList it_selection_list(selection_list, MFn::kMesh, &status);
     if (status != MStatus::kSuccess)
         FAILURE("SknWriter: it_selection_list()");
 
@@ -151,7 +151,7 @@ MStatus SknWriter::dumpData(SklData* skl_data)
         int toRemove = num_influences - SklData::kMaxIndices;
         FAILURE(MString("SknWriter: too much bound bones, plz remove ") + toRemove + " influence(s)");
     }
-    
+
     // get skl indices by influence index
     MIntArray skl_indices_by_influence_index(num_influences);
     for (int i = 0; i < num_influences; i++)
@@ -166,7 +166,7 @@ MStatus SknWriter::dumpData(SklData* skl_data)
         if (j == skl_data->num_bones)
             FAILURE("SknWriter: unable to find a bound bone in the skeleton data_.\
                         this error should not happen!");
-        
+
         skl_indices_by_influence_index[i] = j;
     }
 
@@ -208,7 +208,7 @@ MStatus SknWriter::dumpData(SklData* skl_data)
     }
     else
         MGlobal::displayInfo(MString("shaders for this mesh : ") + shader_count);
-        
+
     // check for holes
     MIntArray hole_info_array;
     MIntArray hole_vertex_array;
@@ -227,7 +227,7 @@ MStatus SknWriter::dumpData(SklData* skl_data)
 
         int polyIndex = mesh_polygon_iter.index();
         int shaderIndex = poly_shader_indices[polyIndex];
-        
+
         MIntArray vertices;
         mesh_polygon_iter.getVertices(vertices);
         if (shaderIndex == -1)
@@ -237,7 +237,7 @@ MStatus SknWriter::dumpData(SklData* skl_data)
         {
             if (shader_count > 1 && shader_by_vertex[vertices[i]] != -1 && shaderIndex != shader_by_vertex[vertices[i]])
                 FAILURE("SknWriter: some vertices are shared by different shaders");
-            
+
             shader_by_vertex[vertices[i]] = shaderIndex;
         }
     }
@@ -491,11 +491,11 @@ MStatus SknWriter::dumpData(SklData* skl_data)
         vertexOffset += num_vertices;
 
         for (int j = 0; j < num_indices; j++)
-            data_.indices.push_back((USHORT)shader_triangles[i][j]);
-        
+            data_.indices.push_back((uint16_t)shader_triangles[i][j]);
+
         // get the plug for SurfaceShader
         MPlug shader_plug = MFnDependencyNode(shaders[i]).findPlug("surfaceShader");
-        
+
         // get the connections to this plug
         MPlugArray plug_array;
         shader_plug.connectedTo(plug_array, true, false, &status);
@@ -512,4 +512,3 @@ MStatus SknWriter::dumpData(SklData* skl_data)
 }
 
 } // namespace riot
-

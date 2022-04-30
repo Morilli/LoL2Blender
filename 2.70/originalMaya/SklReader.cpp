@@ -11,7 +11,7 @@
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful, 
+    This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
@@ -40,8 +40,8 @@ struct RawHeader
     int size;
     int magic;
     int uk;
-    WORD uk2;
-    WORD nbSklBones;
+    uint16_t uk2;
+    uint16_t nbSklBones;
     int num_bones_foranim;
     int header_size; // 0x40
     int size_after_array1;
@@ -53,14 +53,14 @@ struct RawHeader
 
 struct RawSklBone
 {
-    WORD uk;
+    uint16_t uk;
     short id;
     short parent_id;
-    WORD uk2;
+    uint16_t uk2;
     int namehash;
     float unused;
-    float tx; 
-    float ty; 
+    float tx;
+    float ty;
     float tz;
     float unused1;
     float unused2;
@@ -93,14 +93,14 @@ MStatus SklReader::readBinary(istream& file)
 
     struct RawSklBone* raw_bone = reinterpret_cast<struct RawSklBone*>(pcopy + phead->header_size);
     char* pname = pcopy + phead->size_after_array4;
-    
+
     data_.bones.resize(num_bones);
-    
+
     // get bones
     for (int i = 0; i < num_bones; i++)
     {
         SklBone bone;
-        
+
         MVector translation = MVector(raw_bone->tx, raw_bone->ty, raw_bone->tz);
         MTransformationMatrix transform;
         transform.setTranslation(translation, MSpace::kWorld);
@@ -109,7 +109,7 @@ MStatus SklReader::readBinary(istream& file)
         for (int j = 0; j < 4; j++)
             for (int k = 0; k < 4; k++)
                 bone.transform[j][k] = static_cast<float>(mat[j][k]);
-        
+
         char* c = bone.name;
         int count = 0;
         char* pname0 = pname;
@@ -128,9 +128,9 @@ MStatus SklReader::readBinary(istream& file)
 
     int num_indices = phead->num_bones_foranim;
     data_.num_indices = num_indices;
-    
-    WORD* anim_indices = reinterpret_cast<WORD*>(pcopy + phead->size_after_array2);
-    
+
+    uint16_t* anim_indices = reinterpret_cast<uint16_t*>(pcopy + phead->size_after_array2);
+
     for (int i = 0; i < num_indices; i++)
     {
         data_.skn_indices.append(*anim_indices);
@@ -237,7 +237,7 @@ MStatus SklReader::read(istream& file)
     }
     else
         FAILURE("SklReader: magic is wrong!");
-    
+
     data_.switchHand();
 
     return MS::kSuccess;
@@ -249,7 +249,7 @@ MStatus SklReader::loadData()
     // prevent update for later type versions.
 
     MFnIkJoint fn_joint;
-    
+
     MStatus status;
     MDagPath dag_path;
 
@@ -320,7 +320,7 @@ MStatus SklReader::templateUnused()
             }
             if (j != num_influences)
                 continue;
-            
+
             MFnIkJoint joint(data_.joints[i]);
             if (joint.childCount())
                 continue;
@@ -334,4 +334,3 @@ MStatus SklReader::templateUnused()
 }
 
 } // namespace riot
-

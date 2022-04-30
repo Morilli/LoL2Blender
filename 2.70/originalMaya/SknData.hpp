@@ -89,7 +89,7 @@ public:
     int num_vtxs;
     int num_indices;
     int num_final_vtxs;
-    std::vector<USHORT> indices;
+    std::vector<uint16_t> indices;
     std::vector<SknMaterial> materials;
     std::vector<SknVtx> vertices;
     int endTab[3];
