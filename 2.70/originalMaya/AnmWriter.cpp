@@ -11,7 +11,7 @@
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful, 
+    This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
@@ -85,8 +85,7 @@ MStatus AnmWriter::dumpData()
 
     // get anim config
     double fps;
-    MGlobal::executeCommand("playbackOptions -q -ps", fps);
-    fps *= 24.0f;
+    MGlobal::executeCommand("currentTimeUnitToFPS", fps);
     data_.fps = static_cast<float>(fps);
 
     int start, end;
@@ -177,4 +176,3 @@ MStatus AnmWriter::dumpData()
 }
 
 } // namespace riot
-
